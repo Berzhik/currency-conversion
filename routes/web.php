@@ -14,4 +14,5 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/', [PageController::class, 'homepage']);
+Route::get('/', [PageController::class, 'homepage'])->name('homepage');
+Route::get('/convert', [PageController::class, 'convert'])->name('convert');

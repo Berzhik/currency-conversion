@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-    <form>
+    <form action="{{ route('convert') }}">
         <div>
             <span>Source currency</span>
             <select name="source">
@@ -24,5 +24,7 @@
             <span>amount</span>
             <input type="number" name="amount" />
         </div>
+
+        <button>Calculate</button>
     </form>
 @endsection

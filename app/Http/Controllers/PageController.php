@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Conversion\ProviderInterface;
+use App\Http\Requests\Conversion\FormRequest;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -27,6 +28,15 @@ class PageController extends Controller
 
         return view('page.homepage', [
             'currencies' => $currencies
+        ]);
+    }
+
+    public function convert(FormRequest $formRequest)
+    {
+        $result = $this->conversionProvider->convertCurrency($formRequest->validated());
+
+        return view('page.conversion-result', [
+            'value' => $result['response']
         ]);
     }
 }

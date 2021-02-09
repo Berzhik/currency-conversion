@@ -25,7 +25,30 @@ class OpenExchangeRates implements ProviderInterface
      */
     public function getAvailableCurrencies()
     {
-        $request = Http::get(self::API_ENDPOINT . 'curarencies.json');
+        $request = Http::get(self::API_ENDPOINT . 'currencies.json');
+
+        if (!$request->successful()) {
+            throw new Exception($request->body());
+        }
+
+        return $request->json();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function convertCurrency($formData)
+    {
+        $request = Http::get(self::API_ENDPOINT . 'convert', [
+            'value' => $formData['amount'],
+            'from' => $formData['source'],
+            'to' => $formData['destination'],
+            'app_id' => $this->appId
+        ]);
+
+        if (!$request->successful()) {
+            throw new Exception($request->body());
+        }
 
         return $request->json();
     }
