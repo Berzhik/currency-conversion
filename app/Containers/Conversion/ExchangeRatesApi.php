@@ -67,7 +67,7 @@ class ExchangeRatesApi implements ProviderInterface
         $request = Http::get(self::API_ENDPOINT . $path, $data);
 
         if (!$request->successful()) {
-            throw new Exception($request->body());
+            throw new Exception('The service is unavailable right now. Try a bit later');
         }
 
         return $request->json();

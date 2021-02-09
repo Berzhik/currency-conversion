@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-    Result: {{ $value }}
+    Result: {{ $result }}
     <br />
     <a href="{{ route('homepage') }}"><button>Try one more time</button></a>
 @endsection 

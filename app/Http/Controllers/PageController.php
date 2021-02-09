@@ -34,7 +34,13 @@ class PageController extends Controller
 
     public function homepage()
     {
-        $currencies = $this->conversionProvider->getAvailableCurrencies();
+        try {
+            $currencies = $this->conversionProvider->getAvailableCurrencies();
+        } catch (Exception $e) {
+            return view('page.homepage', [
+                'error' => $e->getMessage()
+            ]);
+        }
 
         return view('page.homepage', [
             'currencies' => $currencies
@@ -44,11 +50,18 @@ class PageController extends Controller
     public function convert(FormRequest $formRequest)
     {
         $formData = $formRequest->validated();
-        $result = $this->conversionProvider->convertCurrency($formData);
+        try {
+            $result = $this->conversionProvider->convertCurrency($formData);
+        } catch (Exception $e) {
+            return view('page.conversion-result', [
+                'result' => $e->getMessage()
+            ]);
+        }
+
         $this->exchangeHistoryRepository->addRecord($formData);
 
         return view('page.conversion-result', [
-            'value' => $result
+            'result' => $result
         ]);
     }
 
@@ -68,15 +81,24 @@ class PageController extends Controller
     }
 
     /**
-     * @return float
+     * @return float|string
      */
     private function getTotalConverted()
     {
-        $usdRates = $this->conversionProvider->getRatesForCurrency()['rates'];
+        try {
+            $usdRates = $this->conversionProvider->getRatesForCurrency()['rates'];
+        } catch (Exception $e) {
+            return 'The data cannot be calculated right now. Try a bit later';
+        }
+
         $exchanges = $this->exchangeHistoryRepository->getAllRecords();
         $totalAmount = 0;
 
         foreach ($exchanges as $record) {
+            if (empty($usdRates[$record['source']])) {
+                continue;
+            }
+
             $totalAmount += (1 / $usdRates[$record['source']]) * $record['amount'];
         }
 
