@@ -16,7 +16,7 @@ class FormRequest extends BaseFormRequest
         return [
             'source' => 'required',
             'destination' => 'required',
-            'amount' => 'required|integer|min:0'
+            'amount' => 'required|integer|min:1'
         ];
     }
 }

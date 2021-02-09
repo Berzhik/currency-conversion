@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-    <form action="{{ route('convert') }}">
+    <form action="{{ route('convert') }}" method="post">
         <div>
             <span>Source currency</span>
             <select name="source">
@@ -25,6 +25,9 @@
             <input type="number" name="amount" />
         </div>
 
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <button>Calculate</button>
     </form>
+
+    <a href="{{ route('statistics') }}"><button>Show me the statistic</button></a>
 @endsection

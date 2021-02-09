@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Containers\Conversion\OpenExchangeRates;
+use App\Containers\Conversion\ExchangeRatesApi;
 use App\Contracts\Conversion\ProviderInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +25,6 @@ class ConversionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(ProviderInterface::class, OpenExchangeRates::class);
+        $this->app->bind(ProviderInterface::class, ExchangeRatesApi::class);
     }
 }

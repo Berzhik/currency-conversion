@@ -6,6 +6,9 @@ use App\Contracts\Conversion\ProviderInterface;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
+/**
+ * @todo The development of this class was not completed due to the need for a paid subscription
+ */
 class OpenExchangeRates implements ProviderInterface
 {
     const API_ENDPOINT = 'https://openexchangerates.org/api/';
@@ -50,6 +53,14 @@ class OpenExchangeRates implements ProviderInterface
             throw new Exception($request->body());
         }
 
-        return $request->json();
+        return $request['response'];
+    }
+
+    /**
+     * @todo implement the function
+     */
+    public function getRatesForCurrency()
+    {
+
     }
 }

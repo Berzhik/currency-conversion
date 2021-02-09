@@ -15,4 +15,5 @@ use App\Http\Controllers\PageController;
 */
 
 Route::get('/', [PageController::class, 'homepage'])->name('homepage');
-Route::get('/convert', [PageController::class, 'convert'])->name('convert');
+Route::get('/stats', [PageController::class, 'statistics'])->name('statistics');
+Route::post('/convert', [PageController::class, 'convert'])->name('convert');
