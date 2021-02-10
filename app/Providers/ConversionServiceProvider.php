@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Containers\Conversion\ExchangeRatesApi;
+use App\Containers\Http\Http;
 use App\Contracts\Conversion\ProviderInterface;
+use App\Contracts\Http\AdapterInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ConversionServiceProvider extends ServiceProvider
@@ -26,5 +28,7 @@ class ConversionServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(ProviderInterface::class, ExchangeRatesApi::class);
+
+        $this->app->bind(AdapterInterface::class, Http::class);
     }
 }
