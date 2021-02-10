@@ -13,7 +13,18 @@ class Http implements AdapterInterface
      */
     public function sendRequest($url, $method, $params = [])
     {
-        $response = FacadesHttp::send($method, $url, $params);
+        switch ($method) {
+            case 'POST': 
+                $response = FacadesHttp::post($url, $params);
+                break;
+
+            case 'GET':
+                $response = FacadesHttp::get($url, $params);
+                break;
+
+            default:
+                throw new Exception('Check the method');
+        }
 
         if (!$response->successful()) {
             throw new Exception('The service is unavailable right now. Try a bit later');
